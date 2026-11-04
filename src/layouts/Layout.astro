@@ -1,0 +1,29 @@
+---
+import '../styles/global.css';
+import Icon from '../components/Icon.astro';
+interface Props { title: string; active?: string; description?: string; }
+const { title, active = '', description = 'Przygotowania drużyny do piątkowej wyprawy w Śródziemie. Bohaterowie, zasady i kampanie w jednym miejscu.' } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const nav = [{slug:'zasady',label:'Zasady gry',icon:'book'}, {slug:'gracze',label:'Gracze',icon:'people'}, {slug:'kampanie',label:'Kampanie',icon:'compass'}];
+---
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="description" content={description}/><meta name="theme-color" content="#14271f"/>
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`}/>
+    <title>{title} · Drużyna Śródziemia</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Przejdź do treści</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a href={base} class="brand" aria-label="Drużyna Śródziemia — strona główna"><span class="brand-mark"><Icon name="leaf" size={30}/></span><span>DRUŻYNA<small>ŚRÓDZIEMIA</small></span></a>
+        <nav aria-label="Nawigacja główna">{nav.map(item => <a class:list={['nav-link',{active:active === item.slug}]} href={`${base}${item.slug}/`} aria-current={active === item.slug ? 'page' : undefined}><Icon name={item.icon} size={18}/>{item.label}</a>)}</nav>
+        <span class="session-chip"><span class="status-dot"></span> PIĄTEK, 6 LISTOPADA <span class="year">2026</span></span>
+      </div>
+    </header>
+    <main id="main"><slot/></main>
+    <footer class="site-footer"><div><a class="footer-brand" href={base}><Icon name="leaf" size={18}/> Mała drużyna. Wielka przygoda.</a><p>Jędrzej · Piotr · Michał · Miłosz</p></div><div class="footer-note">Nieoficjalny pomocnik do gry<br/><a href={`${base}zasady/#zrodla`}>Źródła i informacje o treści ↗</a></div></footer>
+  </body>
+</html>

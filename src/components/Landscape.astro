@@ -1,0 +1,21 @@
+---
+interface Props { variant?: string; }
+const { variant = 'green' } = Astro.props;
+---
+<svg class:list={['landscape', variant]} viewBox="0 0 1200 440" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id={`sky-${variant}`} x1="700" y1="0" x2="700" y2="440" gradientUnits="userSpaceOnUse"><stop stop-color="#8eaaa0"/><stop offset="1" stop-color="#344e42"/></linearGradient>
+    <linearGradient id={`shade-${variant}`} x1="0" y1="220" x2="1000" y2="220" gradientUnits="userSpaceOnUse"><stop stop-color="#10251e"/><stop offset=".5" stop-color="#10251e" stop-opacity=".66"/><stop offset="1" stop-color="#10251e" stop-opacity="0"/></linearGradient>
+  </defs>
+  <path fill={`url(#sky-${variant})`} d="M0 0h1200v440H0z"/>
+  <circle cx="973" cy="92" r="43" fill="#dfd9b4" opacity=".5"/>
+  <path d="m170 315 147-181 61 65 94-140 81 109 58-57 80 84 95-140 83 109 49-59 182 173 100 62v100H170Z" fill="#8b9e91"/>
+  <path d="m472 59-49 99 38-15 15 15 15-24 62 34-81-109Zm314-4-53 95 33-23 22 20 14-33 41 22-57-81Z" fill="#cfcec0" opacity=".8"/>
+  <path d="m310 319 203-140 82 77 134-82 81 80 129-83 261 139v130H310Z" fill="#526c5c"/>
+  <path d="M0 338c192-39 283-18 430-9 151 10 235-81 367-49 137 33 225-42 403-16v176H0Z" fill="#354f40"/>
+  <path d="M742 440c-62-68 176-81 133-125-13-13-50-19-41-30 9 14 68 15 79 31 44 62-114 63-95 124" fill="#a9b2a0" opacity=".4"/>
+  <path d="M0 365c226-62 282 54 457 19 193-39 272-29 398 22l345-50v84H0Z" fill="#1e392b"/>
+  {[620, 685, 745, 950, 1030, 1090, 1155].map((position, index) => <g transform={`translate(${position} ${195 + (index % 3) * 32}) scale(${.65 + (index % 3) * .2})`} fill="#1b3528"><path d="M0 120 32 66H15L40 23l25 43H49l32 54H49v34H32v-34H0Z"/></g>)}
+  <path fill={`url(#shade-${variant})`} d="M0 0h1200v440H0z"/>
+  <path d="M0 440V0h45l-9 78 50-39-43 58-9 59 92-63-86 91-7 100 79-69-73 102-3 123H0ZM1200 440V0h-31l8 101-63-62 63 92 3 78-95-80 89 115 4 196h22Z" fill="#10251e" opacity=".7"/>
+</svg>

@@ -1,0 +1,46 @@
+{
+  "drawnAt": "2026-11-04T21:51:15.692Z",
+  "players": [
+    {
+      "id": "jedrzej",
+      "name": "Jędrzej",
+      "heroes": [
+        "arwen",
+        "balin",
+        "gimli",
+        "gandalf",
+        "aragorn"
+      ]
+    },
+    {
+      "id": "piotr",
+      "name": "Piotr",
+      "heroes": [
+        "boromir",
+        "calaminth-took",
+        "beorn",
+        "freahild"
+      ]
+    },
+    {
+      "id": "michal",
+      "name": "Michał",
+      "heroes": [
+        "eleanor",
+        "elena",
+        "beravor",
+        "dwalin"
+      ]
+    },
+    {
+      "id": "milosz",
+      "name": "Miłosz",
+      "heroes": [
+        "dis",
+        "renerien",
+        "legolas",
+        "bilbo"
+      ]
+    }
+  ]
+}

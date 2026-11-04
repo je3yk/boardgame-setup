@@ -1,0 +1,21 @@
+---
+import type { Hero } from '../data/heroes';
+import { expansions, heroes, statNames } from '../data/heroes';
+import Icon from './Icon.astro';
+interface Props { hero: Hero; playerId: string; }
+const { hero, playerId } = Astro.props;
+const base = import.meta.env.BASE_URL;
+const roles = [...new Set(heroes.map(hero => hero.role))];
+---
+<article class="hero-card" data-hero={hero.id} data-name={hero.name} data-player={playerId}>
+  <div class="hero-card-top">
+    <img class="portrait" src={`${base}heroes/${hero.id}.png`} alt="" width="172" height="176" loading="lazy"/>
+    <div class="hero-identity"><span class="eyebrow">{hero.race}</span><h3>{hero.name}</h3><p>{hero.style}</p><span class:list={['expansion-tag',hero.expansion]}>{expansions[hero.expansion]}</span></div>
+    <span class="selected-mark" hidden><Icon name="check" size={18}/><span class="sr-only">Wybrana postać</span></span>
+  </div>
+  <dl class="stats">{hero.stats.map((value,index) => <div><dt>{statNames[index]}</dt><dd>{value}</dd></div>)}</dl>
+  <div class="thresholds"><span><b>{hero.damage}</b> próg obrażeń</span><span><b>{hero.fear}</b> próg strachu</span><span><b>{hero.inspiration}</b> limit natchnienia</span></div>
+  <p class="hero-tip">{hero.tip}</p>
+  <div class="hero-facts"><div><h4>Ekwipunek na start · I poziom</h4><p>{hero.gear}</p></div><div><h4>Zdolność bohatera <span>· skrót</span></h4><p>{hero.ability}</p></div></div>
+  <div class="hero-choice"><label for={`role-${hero.id}`}>Sugerowana rola <span>· możesz zmienić</span></label><select id={`role-${hero.id}`} data-role>{roles.map(role => <option value={role} selected={role === hero.role}>{role}</option>)}</select><button type="button" class="button choose-button" data-choose data-hero-name={hero.name}>Wybieram: {hero.name}<Icon name="arrow" size={17}/></button></div>
+</article>

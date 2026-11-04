@@ -1,0 +1,25 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import HeroCard from '../components/HeroCard.astro';
+import { heroes } from '../data/heroes';
+import { players } from '../data/assignments.json';
+const base = import.meta.env.BASE_URL;
+---
+<Layout title="Gracze" active="gracze">
+  <div class="page-container">
+    <div class="page-heading"><div><p class="eyebrow gold">PRZED WYRUSZENIEM W DROGĘ</p><h1>Znajdź swojego bohatera<span>.</span></h1><p>Jeden wieczór. Czterech kompanów. Wiele sposobów na przygodę.<br class="desktop-break"/> Sprawdź swoją pulę i wybierz, kim wyruszysz w Śródziemie.</p></div><span class="heading-seal"><Icon name="people" size={37}/></span></div>
+    <section class="party-panel" aria-labelledby="party-heading"><div class="party-intro"><span class="eyebrow">WASZA DRUŻYNA</span><h2 id="party-heading">Każda podróż zaczyna się od wyboru.</h2><p>Wybory zapisują się tylko w tej przeglądarce. Nie są synchronizowane między telefonami.</p></div><div class="party-slots">{players.map(player => <div class="party-slot" data-party-slot={player.id}><span class="player-avatar">{player.name[0]}</span><div><b>{player.name}</b><span data-party-name>Jeszcze nie wybrano</span><small data-party-role></small></div><button type="button" class="clear-choice" data-clear={player.id} aria-label={`Usuń wybór: ${player.name}`} hidden>×</button></div>)}</div></section>
+    <div class="roster-toolbar"><div class="player-tabs" role="group" aria-label="Filtruj graczy"><button type="button" class="player-tab active" data-player-filter="all" aria-pressed="true">Wszyscy <span>17</span></button>{players.map(player => <button type="button" class="player-tab" data-player-filter={player.id} aria-pressed="false">{player.name}<span>{player.heroes.length}</span></button>)}</div><label class="search-field"><span class="sr-only">Szukaj bohatera po nazwie lub stylu gry</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/></svg><input type="search" placeholder="Szukaj bohatera…" id="hero-search"/></label></div>
+    <p class="small muted roster-note"><Icon name="spark" size={16}/> Pula została wylosowana raz i zapisana na stałe. 17 postaci → grupy 5 / 4 / 4 / 4. Rola nie jest na stałe związana z bohaterem.</p>
+    <noscript><p class="notice">Włącz JavaScript, aby filtrować postacie i zapisywać wybory. Wszystkie opisy są dostępne także bez niego.</p></noscript>
+    {players.map((player,index) => <section class="player-section" id={player.id} data-player-section={player.id} aria-labelledby={`heading-${player.id}`}><div class="section-heading"><div class="player-title"><span class="player-number">0{index+1}</span><h2 id={`heading-${player.id}`}>Pula: {player.name}</h2>{index === 0 && <span class="host-badge">Gospodarz</span>}</div><span class="muted small">{player.heroes.length} bohaterów do wyboru</span></div><div class="hero-grid">{player.heroes.map(id => <HeroCard hero={heroes.find(hero => hero.id === id)!} playerId={player.id}/>)}</div></section>)}
+    <p class="empty-state" id="empty-state" hidden>Nie znaleziono bohatera. Zmień nazwę lub wybierz inną pulę.</p>
+    <aside class="notice"><Icon name="book"/><div><b>Bohater to dopiero początek.</b><p>Podane role i wyposażenie to propozycje startowe, nie obowiązkowe zestawy. Polskie nazwy są opisowymi tłumaczeniami; angielska nazwa roli pozwala ją zidentyfikować. Ostateczny ekwipunek uzgodnijcie w aplikacji, szczególnie gdy kilku bohaterów chce tę samą kartę. Dokładne brzmienie zdolności sprawdzajcie na swoich kartach.</p><a class="text-link" href={`${base}zasady/`}>Poznaj podstawy przed wyborem <Icon name="arrow" size={16}/></a></div></aside>
+    <p id="choice-status" class="sr-only" role="status" aria-live="polite"></p><p id="storage-error" class="notice" hidden>Przeglądarka nie pozwala zapisać wyborów. Działają do odświeżenia tej strony.</p>
+  </div>
+</Layout>
+<script>
+  import { initRoster } from '../scripts/roster';
+  initRoster();
+</script>

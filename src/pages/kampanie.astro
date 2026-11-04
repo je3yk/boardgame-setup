@@ -1,0 +1,13 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Icon from '../components/Icon.astro';
+import Landscape from '../components/Landscape.astro';
+import { campaigns } from '../data/campaigns';
+---
+<Layout title="Kampanie" active="kampanie">
+  <div class="page-container"><div class="page-heading"><div><p class="eyebrow gold">WYBIERZCIE KIERUNEK WYPRAWY</p><h1>Każda droga to inna historia<span>.</span></h1><p>Pięć kampanii dostępnych w aplikacji Jędrzeja.<br class="desktop-break"/> Same początki opowieści. Żadnych zdradzonych sekretów.</p></div><span class="heading-seal"><Icon name="compass" size={39}/></span></div>
+    <div class="campaign-banner"><Icon name="check" size={21}/><p><b>Możemy wybrać dowolną z poniższych.</b> Macie wymagane pudełka i dostęp do tych kampanii w aplikacji. Podane liczby oznaczają zawartość kampanii, nie obietnicę identycznej długości każdej ścieżki.</p></div>
+    <div class="campaign-grid">{campaigns.map((campaign,index) => <article class:list={['campaign-card',`campaign-${campaign.id}`,{deprioritized:campaign.id==='arnor'}]}><div class="campaign-art"><Landscape variant={campaign.id}/><div class="campaign-art-label"><Icon name={campaign.icon} size={37}/><span>{campaign.region}</span></div><span class="campaign-index">0{index+1}</span></div><div class="campaign-content"><div class="campaign-labels"><span class:list={['pill',{warning:campaign.id==='arnor'}]}>{campaign.tag}</span><span class="small muted">{campaign.chapters}</span></div><h2>{campaign.title}</h2><p class="campaign-mood">{campaign.mood}</p><p>{campaign.intro}</p><div class:list={['campaign-reason',{'host-preference':campaign.id==='arnor'}]}><h3>{campaign.id==='arnor' ? 'Uwaga od gospodarza' : 'Dla jakiej drużyny?'}</h3><p>{campaign.reason}</p></div><div class="campaign-requirement"><Icon name="check" size={16}/><span>{campaign.requirement}</span></div><a class="source-link" href={campaign.source} target="_blank" rel="noreferrer">Opis wydawcy / źródło ↗</a></div></article>)}</div>
+    <aside class="notice"><Icon name="book"/><div><b>Kampania to więcej niż jeden wieczór.</b><p>Wybieramy początek dłuższej opowieści, a nie pojedynczy scenariusz. Zapis nowej drużyny utwórzcie w osobnym slocie — bez nadpisywania kampanii innych grup. Bohaterowie zostają z wami przez kampanię, ale role można zmieniać między przygodami.</p></div></aside>
+  </div>
+</Layout>
